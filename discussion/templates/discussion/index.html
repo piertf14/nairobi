@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi</title>
+    {% load staticfiles %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block style %}
+    {% endblock %}
+</head>
+<body class="top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">Nairobi</a>
+                </div>
+            </nav>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                {% for object in object_list %}
+                    <div class="social-feed-box">
+                        <div class="social-avatar">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="{% static 'img/happiness.png' %}">
+                            </a>
+                            <div class="media-body">
+                                <a href="#">
+                                    {{ object.user.user.first_name }} {{ object.user.user.last_name }}
+                                </a>
+                                <small class="text-muted">{{ object.created_at|date }}</small>
+                            </div>
+                        </div>
+                        <div class="social-body">
+                            <p>
+                                {{ object.message }}
+                            </p>
+
+                            <div class="btn-group">
+                                <a class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i>{{ object.likes }}
+                                    Like</a>
+                            </div>
+                        </div>
+                        {% for comment in object.get_comments %}
+                            <div class="social-footer">
+                            <div class="social-comment">
+                                <a href="" class="pull-left">
+                                    <img alt="image" src="{% static 'img/thief.png' %}">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                       {{ comment.user.first_name }} {{ comment.user.last_name }}
+                                    </a>
+                                    {{ comment.message }}
+                                    <br/>
+                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> {{ comment.likes }} Like this!</a> -
+                                    <small class="text-muted">{{ comment.created_at|date }}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="{% static 'img/thief.png' %}">
+                            </a>
+                            <div class="media-body">
+                                <textarea class="form-control" placeholder="Write comment..."></textarea>
+                            </div>
+                        </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> Perú Invoices &copy; 2017
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery-2.1.1.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+
+{% block js %}
+{% endblock %}
+
+</body>
+</html>
