@@ -1,8 +1,10 @@
 from django.views.generic import ListView
-from discussion.models import Discussion
+from discussion.models import Discussion, Comment
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 
 
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     template_name = 'discussion/index.html'
     model = Discussion
 
@@ -22,3 +24,15 @@ class IndexView(ListView):
         if context_object_name is not None:
             data[context_object_name] = queryset
         return data
+
+    def post(self, request, *args, **kwargs):
+        comment = request.POST.get('comment')
+        discussion_id = request.POST.get('discussion_id')
+        if comment and discussion_id:
+            Comment.objects.create(**{
+                'discussion_id': discussion_id,
+                'message': comment,
+                'user_id': request.user.id
+            })
+
+        return HttpResponseRedirect('/')

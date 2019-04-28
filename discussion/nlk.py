@@ -2,6 +2,7 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.lancaster import LancasterStemmer
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 # word stemmer
 stemmer = LancasterStemmer()

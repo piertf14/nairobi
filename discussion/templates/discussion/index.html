@@ -31,13 +31,14 @@
             <div class="row">
                 {% for object in object_list %}
                     <div class="social-feed-box">
+
                         <div class="social-avatar">
                             <a href="" class="pull-left">
-                                <img alt="image" src="{% static 'img/happiness.png' %}">
+                                <img alt="image" src="{% static 'img/a6.jpg' %}">
                             </a>
                             <div class="media-body">
                                 <a href="#">
-                                    {{ object.user.user.first_name }} {{ object.user.user.last_name }}
+                                    {{ object.user.first_name }} {{ object.user.last_name }}
                                 </a>
                                 <small class="text-muted">{{ object.created_at|date }}</small>
                             </div>
@@ -47,47 +48,52 @@
                                 {{ object.message }}
                             </p>
 
-                            <div class="btn-group">
-                                <a class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i>{{ object.likes }}
-                                    Like</a>
-                            </div>
                         </div>
-                        {% for comment in object.get_comments %}
-                            <div class="social-footer">
+                        <div class="social-footer">
+                            {% for comment  in object.comments.all %}
+                                <div class="social-comment">
+                                    <a href="" class="pull-left">
+                                        <img alt="image" src="{% static 'img/a1.jpg' %}">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="#">
+                                            {{ comment.user.first_name }} {{ comment.user.last_name }}
+                                        </a>
+                                        {{ comment.message }}
+                                        <br/>
+                                        <a href="#" class="small"><i class="fa fa-thumbs-up"></i> {{ comment.likes }}
+                                            Like</a> -
+                                        <small class="text-muted">{{ comment.created_at }}</small>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
                             <div class="social-comment">
                                 <a href="" class="pull-left">
-                                    <img alt="image" src="{% static 'img/thief.png' %}">
+                                    <img alt="image" src="{% static 'img/a3.jpg' %}">
                                 </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                       {{ comment.user.first_name }} {{ comment.user.last_name }}
-                                    </a>
-                                    {{ comment.message }}
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> {{ comment.likes }} Like this!</a> -
-                                    <small class="text-muted">{{ comment.created_at|date }}</small>
-                                </div>
+                                <form method="post" action="" name="form" id="form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="discussion_id" value="{{ object.id }}">
+                                    <div class="media-body">
+                                        <textarea name="comment" id="comment" class="form-control"
+                                                  placeholder="Escribe tu comentario..."></textarea>
+                                    </div>
+                                    <input type="submit" style="display:none"/>
+                                </form>
+
                             </div>
-                        {% endfor %}
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="{% static 'img/thief.png' %}">
-                            </a>
-                            <div class="media-body">
-                                <textarea class="form-control" placeholder="Write comment..."></textarea>
-                            </div>
-                        </div>
 
                         </div>
 
                     </div>
+                    </div>
                 {% endfor %}
-            </div>
         </div>
 
         <div class="footer">
             <div>
-                <strong>Copyright</strong> Perú Invoices &copy; 2017
+                <strong>Copyright</strong> Los Sin Nombre &copy; 2017
             </div>
         </div>
     </div>
@@ -96,6 +102,13 @@
 <script src="{% static 'js/bootstrap.js' %}"></script>
 
 {% block js %}
+    <script>
+        document.getElementById('comment').onkeydown = function (e) {
+            if (e.keyCode == 13) {
+                $( "#form" ).submit();
+            }
+        };
+    </script>
 {% endblock %}
 
 </body>
