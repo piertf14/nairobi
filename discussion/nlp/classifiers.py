@@ -2,11 +2,12 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 from nltk.tokenize import word_tokenize
 
-
+#Carganfo base de datos de palabras positivas
 positives = open('discussion/constants/positive.txt', 'r')
 positive_message = positives.read()
 positives.close()
 
+#Cargando base de datos de palabras negativas
 negatives = open('discussion/constants/negative.txt', 'r')
 negative_message = negatives.read()
 negatives.close()
@@ -14,7 +15,7 @@ negatives.close()
 bd_pos = positive_message.split(",")
 bd_neg = negative_message.split(",")
 
-
+#Definiendo el método ngrams
 def ngrams(_input, n):
     _input = _input.split(' ')
     output = []
