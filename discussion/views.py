@@ -1,3 +1,5 @@
+import requests
+import json
 from django.views.generic import ListView
 from pytz import unicode
 
@@ -7,6 +9,7 @@ from django.http import HttpResponseRedirect
 from googletrans import Translator
 from discussion.nlp.classifiers import evaluate_sentence
 import unicodedata
+from django.conf import settings
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -45,6 +48,24 @@ class IndexView(LoginRequiredMixin, ListView):
     def get_word_type(self, comment):
         try:
             comment = self.remove_accents(comment)
+            return evaluate_sentence(comment) or False
+        except Exception as e:
+            return False
+
+    def text_processing(self, comment):
+        try:
+            comment = self.translator_message(comment)
+            url = settings.URL
+            payload = {
+                'text': comment.text
+            }
+            response = requests.request("POST", url, data=payload)
+            if response.status_code == 200:
+                data = json.loads(response.text)
+                if data['label'] == 'neg':
+                    return False
+                else:
+                    return True
             return evaluate_sentence(comment) or False
         except Exception as e:
             return False

@@ -23,6 +23,13 @@ class Discussion(models.Model):
     def get_comments(self):
         return self.comments.filter(is_active=True)
 
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'Discusión'
+        verbose_name_plural = 'Discusiones'
+
 
 class Comment(models.Model):
     user = models.ForeignKey(
@@ -45,3 +52,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True
     )
+
+    class Meta:
+        verbose_name = 'Comentario'
+        verbose_name_plural = 'Comentarios'

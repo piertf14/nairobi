@@ -1,16 +1,3 @@
-import csv
-import sqlite3
-import time
-import nltk
-import re
-from nltk.corpus import stopwords
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import RegexpTokenizer
-from nltk.stem import PorterStemmer
-from nltk.tokenize import sent_tokenize, word_tokenize
-
-
 palabras = []
 bd_palabras = []
 frecuencia = []
@@ -69,32 +56,6 @@ base_datos_desaprobados = ["no me deja utilizar el mental ray",
                            "al intentar descargar los ficheros adjuntos me muestra una pagina con codigo HTML y me da un error",
                            "malisimo el audio",
                            ]
-"""
-cuenta = 0
-
-for w in base_datos_desaprobados:
-	oracion = w
-	palabras = palabras + word_tokenize(oracion)
-
-print('----------------------------------')
-print(len(["hola", "mano"]))
-
-for i in range(len(palabras)):
-	for j in range(len(palabras)):
-		if  palabras [i] == palabras[j]:
-			cuenta = cuenta + 1
-	frecuencia.append(cuenta)
-	cuenta = 0
-
-print(frecuencia)
-
-conjunto =[]
-
-for i in range(len(palabras)):
-	conjunto = conjunto + [palabras[i],frecuencia[i]]
-
-print(conjunto)
-"""
 
 positivas = open('palabras_positivas/positivas.txt', 'r')
 mensaje1 = positivas.read()
