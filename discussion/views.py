@@ -1,15 +1,16 @@
-import requests
 import json
+import unicodedata
+
+import requests
+from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView
+from googletrans import Translator
 from pytz import unicode
 
 from discussion.models import Discussion, Comment
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-from googletrans import Translator
 from discussion.nlp.classifiers import evaluate_sentence
-import unicodedata
-from django.conf import settings
 
 
 class IndexView(LoginRequiredMixin, ListView):
